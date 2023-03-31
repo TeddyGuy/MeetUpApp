@@ -26,7 +26,7 @@ public class AuthController {
     @PostMapping("/sign-in")
     public ResponseEntity<JwtResponse> signIn(@Valid @RequestBody SignInRequest request){
         authenticate(request.email(), request.rawPassword());
-        return ResponseEntity.ok(authService.signIn(request));
+        return ResponseEntity.ok(authService.signIn(request.email()));
     }
 
     @PostMapping("/sign-up")

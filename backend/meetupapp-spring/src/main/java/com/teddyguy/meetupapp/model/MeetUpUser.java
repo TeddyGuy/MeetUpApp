@@ -1,18 +1,16 @@
 package com.teddyguy.meetupapp.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.List;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -20,13 +18,15 @@ import java.util.Collection;
 @Entity
 public class MeetUpUser implements UserDetails {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String email;
     private String name;
     private String password;
-
-
+    @OneToMany(cascade = CascadeType.MERGE, orphanRemoval = true)
+    private List<MeetUpEvent> organizedEvents;
+    @ManyToMany(cascade = CascadeType.MERGE)
+    private List<MeetUpEvent> joinedEvents;
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return null;

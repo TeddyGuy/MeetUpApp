@@ -1,5 +1,6 @@
 package com.teddyguy.meetupapp.util;
 
+import com.teddyguy.meetupapp.model.MeetUpUser;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -50,6 +51,12 @@ public class JwtUtils {
     //generate token for user
     public String generateToken(UserDetails user) {
         Map<String, Object> claims = new HashMap<>();
+        return doGenerateToken(claims, user.getUsername());
+    }
+
+    public String generateTokenMeetUpUser(MeetUpUser user) {
+        Map<String, Object> claims = new HashMap<>();
+        claims.put("name",user.getName());
         return doGenerateToken(claims, user.getUsername());
     }
 

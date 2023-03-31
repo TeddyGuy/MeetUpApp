@@ -12,13 +12,13 @@ import java.util.List;
 @RestController
 @CrossOrigin
 @RequestMapping("/users")
-public class MeetUpUserRepository {
+public class MeetUpUserController {
     MeetUpUserService meetUpUserService;
 
     @GetMapping
-    public ResponseEntity<List<MeetUpUserFetchResponse>> search(@RequestParam String name){
+    public ResponseEntity<List<MeetUpUserFetchResponse>> search(@RequestParam(required = false, name="query") String query){
         return ResponseEntity.ok(
-                meetUpUserService.search(name)
+                meetUpUserService.search(query)
         );
     }
 }
